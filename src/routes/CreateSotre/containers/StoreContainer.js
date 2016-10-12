@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { save,  updateList,  back,  cancel} from '../modules/Store'
+import { save, saveStart, saveCompleted, updateList,  back,  cancel} from '../modules/Store'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
@@ -18,9 +18,7 @@ const mapDispatchToProps = {
   cancel
 }
 
-const mapStateToProps = (state) => ({
-  storeList : state.store
-})
+const mapStateToProps = (state) => (state.store)
 
 /*  Note: mapStateToProps is where you should use `reselect` to create selectors, ie:
 

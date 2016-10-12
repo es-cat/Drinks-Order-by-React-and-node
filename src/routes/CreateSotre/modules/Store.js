@@ -1,7 +1,8 @@
 // ------------------------------------
 // Constants
 // ------------------------------------
-export const STORE_SAVE = 'STORE_SAVE'
+export const STORE_SAVE_START = 'STORE_SAVE_START'
+export const STORE_SAVE_DONE = 'STORE_SAVE_DONE'
 export const STORE_BACK = 'STORE_BACK'
 export const STORE_CANCEL = 'STORE_CANCEL'
 export const STORE_UPDATE = 'STORE_UPDATE'
@@ -30,14 +31,20 @@ export function updateList (storeList) {
   }
 }
 
-// export function save (entity) {
-//   return {
-//     type    : STORE_SAVE,
-//     data    : entity
-//   }
-// }
+export function saveStart () {
+  return {
+    type    : STORE_SAVE_START,
+    processing: true
+  }
+}
 
-
+export function saveDone (response) {
+  return {
+    type    : STORE_SAVE_DONE,
+    data    : response,
+    processing: false
+  }
+}
 /*  This is a thunk, meaning it is a function that immediately
     returns a function for lazy evaluation. It is incredibly useful for
     creating async actions, especially when combined with redux-thunk!
@@ -48,26 +55,20 @@ export function updateList (storeList) {
 const demo = {test:1}
 export const save = (entity = demo) => {
   return (dispatch, getState) => {
+    dispatch(saveStart())
     return new Promise((resolve) => {
       //todo: ajax save and get new list
       setTimeout(() => {
         //fake
-        let storeList = getState().store
+        let storeList = Object.assign([], getState().store.storeList)
         storeList.push(1)
+        let result = {data: storeList, success: true, error: ''}
         //fake end
-        dispatch(updateList(storeList))
-        dispatch(back())
+        dispatch(saveDone(result))
         resolve()
-      }, 200)
+      }, 1000)
     })
   }
-}
-
-export const actions = {
-  cancel,
-  back,
-  updateList,
-  save
 }
 
 // ------------------------------------
@@ -76,17 +77,33 @@ export const actions = {
 const ACTION_HANDLERS = {
   [STORE_UPDATE] : (state, action) => { 
     //location back
-    if(action.data){
-      return action.data
-    }
-    return state
+    let newState = Object.assign({},state)
+    newState.storeList = action.data || []
+    return newState
+  },
+
+  [STORE_SAVE_START] : (state, action) => { 
+    //location back
+    let newState = Object.assign({},state)
+    newState.processing = action.processing
+    return newState
+  },
+
+  [STORE_SAVE_DONE] : (state, action) => { 
+    //location back
+    let newState = Object.assign({},state)
+    newState.processing = action.processing || false
+    newState.storeList = action.data.data || newState.storeList
+    newState.saveResult = action.data.success
+    newState.saveError = action.data.error
+    return newState
   }
 }
 
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = []
+const initialState = {storeList:[]}
 export default function counterReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 
