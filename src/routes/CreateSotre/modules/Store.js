@@ -18,7 +18,7 @@ export function back () {
 
 export function cancel () {
   return (dispatch, getState) => {
-    if(confirm('確定不儲存就離開嗎?\n將放棄尚未儲存的變更。')){
+    if (confirm('確定不儲存就離開嗎?\n將放棄尚未儲存的變更。')) {
       getState().location = '/'
     }
   }
@@ -75,21 +75,21 @@ export const save = (entity = demo) => {
 // Action Handlers
 // ------------------------------------
 const ACTION_HANDLERS = {
-  [STORE_UPDATE] : (state, action) => { 
+  [STORE_UPDATE] : (state, action) => {
     // location back
     let newState = Object.assign({ }, state)
     newState.storeList = action.data || []
     return newState
   },
 
-  [STORE_SAVE_START] : (state, action) => { 
+  [STORE_SAVE_START] : (state, action) => {
     // location back
     let newState = Object.assign({ }, state)
     newState.processing = action.processing
     return newState
   },
 
-  [STORE_SAVE_DONE] : (state, action) => { 
+  [STORE_SAVE_DONE] : (state, action) => {
     // location back
     let newState = Object.assign({ }, state)
     newState.processing = action.processing || false
