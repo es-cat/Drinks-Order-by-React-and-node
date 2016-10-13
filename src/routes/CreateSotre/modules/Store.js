@@ -12,14 +12,14 @@ export const STORE_UPDATE = 'STORE_UPDATE'
 // ------------------------------------
 export function back () {
   return (dispatch, getState) => {
-      getState().location = "/"
+    getState().location = '/'
   }
 }
 
 export function cancel () {
   return (dispatch, getState) => {
-    if(confirm("確定不儲存就離開嗎?\n將放棄尚未儲存的變更。")){
-      getState().location = "/"
+    if(confirm('確定不儲存就離開嗎?\n將放棄尚未儲存的變更。')){
+      getState().location = '/'
     }
   }
 }
@@ -57,13 +57,13 @@ export const save = (entity = demo) => {
   return (dispatch, getState) => {
     dispatch(saveStart())
     return new Promise((resolve) => {
-      //todo: ajax save and get new list
+      // todo: ajax save and get new list
       setTimeout(() => {
-        //fake
+        // fake
         let storeList = Object.assign([], getState().store.storeList)
         storeList.push(1)
         let result = { data: storeList, success: true, error: '' }
-        //fake end
+        // fake end
         dispatch(saveDone(result))
         resolve()
       }, 1000)
@@ -76,22 +76,22 @@ export const save = (entity = demo) => {
 // ------------------------------------
 const ACTION_HANDLERS = {
   [STORE_UPDATE] : (state, action) => { 
-    //location back
-    let newState = Object.assign({ },state)
+    // location back
+    let newState = Object.assign({ }, state)
     newState.storeList = action.data || []
     return newState
   },
 
   [STORE_SAVE_START] : (state, action) => { 
-    //location back
-    let newState = Object.assign({ },state)
+    // location back
+    let newState = Object.assign({ }, state)
     newState.processing = action.processing
     return newState
   },
 
   [STORE_SAVE_DONE] : (state, action) => { 
-    //location back
-    let newState = Object.assign({ },state)
+    // location back
+    let newState = Object.assign({ }, state)
     newState.processing = action.processing || false
     newState.storeList = action.data.data || newState.storeList
     newState.saveResult = action.data.success
