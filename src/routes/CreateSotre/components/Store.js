@@ -8,20 +8,20 @@ export const Store = (props) => (
       SAVE
     </button>
     {' '}
-    <button className='btn btn-default' onClick={props.back}>
+    <button className='btn btn-default'>
       BACK
     </button>
     {' '}
-    <button className='btn btn-default' onClick={props.cancel}>
+    <button className='btn btn-default'>
       CANCEL
     </button>
   </div>
 )
 
 Store.propTypes = {
-  // counter     : React.PropTypes.number.isRequired,
-  // doubleAsync : React.PropTypes.func.isRequired,
-  // increment   : React.PropTypes.func.isRequired
+  storeList     : React.PropTypes.array.isRequired,
+  save          : React.PropTypes.func.isRequired,
+  processing    : React.PropTypes.bool.isRequired
 }
 
 export default Store

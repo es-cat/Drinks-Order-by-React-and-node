@@ -52,7 +52,7 @@ export function saveDone (response) {
     NOTE: This is solely for demonstration purposes. In a real application,
     you'd probably want to dispatch an action of COUNTER_DOUBLE and let the
     reducer take care of this logic.  */
-const demo = {test:1}
+const demo = { test:1 }
 export const save = (entity = demo) => {
   return (dispatch, getState) => {
     dispatch(saveStart())
@@ -62,7 +62,7 @@ export const save = (entity = demo) => {
         //fake
         let storeList = Object.assign([], getState().store.storeList)
         storeList.push(1)
-        let result = {data: storeList, success: true, error: ''}
+        let result = { data: storeList, success: true, error: '' }
         //fake end
         dispatch(saveDone(result))
         resolve()
@@ -77,21 +77,21 @@ export const save = (entity = demo) => {
 const ACTION_HANDLERS = {
   [STORE_UPDATE] : (state, action) => { 
     //location back
-    let newState = Object.assign({},state)
+    let newState = Object.assign({ },state)
     newState.storeList = action.data || []
     return newState
   },
 
   [STORE_SAVE_START] : (state, action) => { 
     //location back
-    let newState = Object.assign({},state)
+    let newState = Object.assign({ },state)
     newState.processing = action.processing
     return newState
   },
 
   [STORE_SAVE_DONE] : (state, action) => { 
     //location back
-    let newState = Object.assign({},state)
+    let newState = Object.assign({ },state)
     newState.processing = action.processing || false
     newState.storeList = action.data.data || newState.storeList
     newState.saveResult = action.data.success
@@ -103,7 +103,7 @@ const ACTION_HANDLERS = {
 // ------------------------------------
 // Reducer
 // ------------------------------------
-const initialState = {storeList:[]}
+const initialState = { storeList:[] }
 export default function counterReducer (state = initialState, action) {
   const handler = ACTION_HANDLERS[action.type]
 

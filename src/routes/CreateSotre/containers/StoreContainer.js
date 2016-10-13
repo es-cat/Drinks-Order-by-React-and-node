@@ -1,5 +1,5 @@
 import { connect } from 'react-redux'
-import { save, saveStart, saveCompleted, updateList,  back,  cancel} from '../modules/Store'
+import { save, back, cancel } from '../modules/Store'
 
 /*  This is a container component. Notice it does not contain any JSX,
     nor does it import React. This component is **only** responsible for
